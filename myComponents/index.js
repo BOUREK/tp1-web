@@ -23,17 +23,17 @@ template.innerHTML = `
     }
 
     .buttonPlay {
-        margin-left:60px;
+        margin-left:0px;
     }
 
     .buttonPause {
-        margin-left:20px;
-        margin-right:20px;
+        margin-left:0px;
+        margin-right:0px;
     }
 
     .buttonReset {
-        margin-left:5px;
-        margin-right:20px;
+        margin-left:px;
+        margin-right:0px;
     }
 
     .stereo {
@@ -67,6 +67,7 @@ template.innerHTML = `
   </div>
   <audio id="myPlayer" crossorigin>
         <source src="./myComponents/assets/mp3/titre1.mp3" type="audio/mp3" />
+        <source src="http://mainline.i3s.unice.fr/mooc/guitarRiff1.ogg" type="audio/mp3" />
   </audio>
 
   <canvas id="myCanvas" width=300 height=100></canvas>
@@ -78,15 +79,25 @@ template.innerHTML = `
   <br>
 
   <div style="width: 100%">
-  <webaudio-knob class="volume" id="knob-1" tooltip="Volume:%s" src="./assets/imgs/OberKnob.png" sprites="99" value=1 min="0" max="1" step=0.01></webaudio-knob>
+  <webaudio-switch class= "buttonPlay" id="playButton" width="60" height="60" src="./assets/imgs/play.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "buttonPause" id="pauseButton" width="60" height="60" src="./assets/imgs/pause.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "buttonReset" id="toZeroButton" width="60" height="60" src="./assets/imgs/reset.png" type="toggle" value="false"></webaudio-switch>
 
-  <webaudio-switch class= "buttonPlay" id="playButton" width="60" height="60" src="./assets/imgs/playButton.png" type="toggle" value="false"></webaudio-switch>
-  <webaudio-switch class= "buttonPause" id="pauseButton" width="60" height="60" src="./assets/imgs/pauseButton.png" type="toggle" value="false"></webaudio-switch>
-  <webaudio-switch class= "buttonReset" id="toZeroButton" width="60" height="60" src="./assets/imgs/resetButton.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "buttonBack" id="backButton" width="60" height="60" src="./assets/imgs/back.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "buttonForward" id="forwardButton" width="60" height="60" src="./assets/imgs/forward.png" type="toggle" value="false"></webaudio-switch>
+  
+  <webaudio-switch class= "buttonSpeed" id="speed2" width="60" height="60" src="./assets/imgs/speed2.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "buttonSlow" id="slow2" width="60" height="60" src="./assets/imgs/slow2.png" type="toggle" value="false"></webaudio-switch>
 
-  <label>L</label>
-  <webaudio-knob class="stereo" id="knobStereo" tooltip="Balance:%s" src="./assets/imgs/equalizer.png" sprites="60" value=0 min="-1" max="1" step=0.05 width="140" height="32"></webaudio-knob>
-  <label>R</label>
+  <webaudio-switch class= "buttonMute" id="muteButton" width="60" height="60" src="./assets/imgs/mute.png" type="toggle" value="false"></webaudio-switch>
+  </div>
+
+  <br>
+
+  <div>
+  <webaudio-knob class="volume" id="knob-1" tooltip="Volume:%s" src="./assets/imgs/vol.png" sprites="99" value=1 min="0" max="1" step=0.01 width="100" height="100"></webaudio-knob>
+  <webaudio-knob class="gain" id="gainSlider1" tooltip="Gain:%s" src="./assets/imgs/gain.png" sprites="99" value=1 min="0" max="3" step=0.1 width="100" height="100"></webaudio-knob>
+  <webaudio-knob class="stereo" id="knobStereo" tooltip="Balance:%s" src="./assets/imgs/stere.png" sprites="99" value=0 min="-1" max="1" step=0.05 width="100" height="100"></webaudio-knob>
   </div>
 
   <br>
@@ -100,32 +111,32 @@ template.innerHTML = `
   <div class="eq">
   <div class="controls">
     <label>60Hz</label>
-    <webaudio-knob id="i0" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" step=0.01 width=200 height=30></webaudio-knob>
+    <webaudio-knob id="i0" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
   <output id="gain0">0 dB</output>
   </div>
   <div class="controls">
     <label>170Hz</label>
-    <webaudio-knob id="i1" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" step=0.01 width=200 height=30></webaudio-knob>
+    <webaudio-knob id="i1" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
 <output id="gain1">0 dB</output>
   </div>
   <div class="controls">
     <label>350Hz</label>
-    <webaudio-knob id="i2" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" step=0.01 width=200 height=30></webaudio-knob>
+    <webaudio-knob id="i2" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
 <output id="gain2">0 dB</output>
   </div>
   <div class="controls">
     <label>1000Hz</label>
-    <webaudio-knob id="i3" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" step=0.01 width=200 height=30></webaudio-knob>
+    <webaudio-knob id="i3" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
 <output id="gain3">0 dB</output>
   </div>
   <div class="controls">
     <label>3500Hz</label>
-    <webaudio-knob id="i4" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" step=0.01 width=200 height=30></webaudio-knob>
+    <webaudio-knob id="i4" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
 <output id="gain4">0 dB</output>
   </div>
   <div class="controls">
     <label>10000Hz</label>
-    <webaudio-knob id="i5" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" step=0.01 width=200 height=30></webaudio-knob>
+    <webaudio-knob id="i5" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
 <output id="gain5">0 dB</output>
   </div>
 
@@ -157,8 +168,9 @@ class MyAudioPlayer extends HTMLElement {
         this.height = this.canvas.height;
         this.canvasContext = this.canvas.getContext('2d');
 
-
         let audioContext = new AudioContext();
+
+        this.gainSlider1 = this.shadowRoot.querySelector('#gainSlider1');
 
         //////////////
         let mediaElement = this.shadowRoot.getElementById('myPlayer');
@@ -171,6 +183,16 @@ class MyAudioPlayer extends HTMLElement {
         this.filters = [];
 
         let playerNode = audioContext.createMediaElementSource(this.player); // noeud speakers
+
+        this.gainNode1 = audioContext.createGain();
+
+        this.gainNode1.gain.value = parseFloat(this.gainSlider1.value);
+
+        // input listener on the gain slider
+        /* this.gainSlider1.oninput = function (event) { ///// bloque 
+            console.log(this.gainSlider1);
+            this.gainNode1.gain.value = event.target.value;
+        }; */
 
         this.pannerNode = audioContext.createStereoPanner(); // noeud stereo
 
@@ -200,9 +222,11 @@ class MyAudioPlayer extends HTMLElement {
             this.filters[i].connect(this.filters[i + 1]);
         }
 
+
         // connect the different nodes
         this.filters[this.filters.length - 1].connect(this.pannerNode);
-        this.pannerNode.connect(this.analyserNode);
+        this.pannerNode.connect(this.gainNode1);
+        this.gainNode1.connect(this.analyserNode);
         this.analyserNode.connect(audioContext.destination);
         ////////////////////
 
@@ -218,12 +242,19 @@ class MyAudioPlayer extends HTMLElement {
         this.canvasContext.fillStyle = 'rgba(0, 0, 0, 0.1)';
         this.canvasContext.fillRect(0, 0, this.width, this.height);
 
+        let gradient = this.canvasContext.createLinearGradient(0, 200, 150, 40);
+        gradient.addColorStop("0.3", "red");
+        gradient.addColorStop("0.7", "yellow");
+        gradient.addColorStop("1.0", "blue");
+        
+
         // 2 - Get the analyser data - for waveforms we need time domain data
         this.analyserNode.getByteTimeDomainData(this.dataArray);
 
         // 3 - draws the waveform
         this.canvasContext.lineWidth = 2;
-        this.canvasContext.strokeStyle = 'lightBlue';
+        //this.canvasContext.strokeStyle = 'lightBlue';
+        this.canvasContext.strokeStyle = gradient;
 
         // the waveform is in one single path, first let's
         // clear any previous path that could be in the buffer
@@ -254,7 +285,7 @@ class MyAudioPlayer extends HTMLElement {
         requestAnimationFrame(() => { this.visualize() });
     }
 
-    
+
 
     changeGain(sliderVal, nbFilter) {
         var value = parseFloat(sliderVal);
@@ -265,15 +296,15 @@ class MyAudioPlayer extends HTMLElement {
         output.value = value + " dB";
     }
 
-    visualizeVolume(){
+    visualizeVolume() {
         let value = 0;
-        for(const v of this.dataArray){
-          value += v;
+        for (const v of this.dataArray) {
+            value += v;
         }
-    
+
         let average = value / this.bufferLength;
         this.shadowRoot.querySelector("#meterKnob").setValue(average);
-    
+
     }
 
     fixRelativeImagePaths() {
@@ -304,6 +335,26 @@ class MyAudioPlayer extends HTMLElement {
 
         this.shadowRoot.querySelector("#toZeroButton").addEventListener("click", (event) => {
             this.toZero();
+        });
+
+        this.shadowRoot.querySelector("#muteButton").addEventListener("click", (event) => {
+            this.mute();
+        });
+
+        this.shadowRoot.querySelector("#backButton").addEventListener("click", (event) => {
+            this.back();
+        });
+
+        this.shadowRoot.querySelector("#forwardButton").addEventListener("click", (event) => {
+            this.forward();
+        });
+
+        this.shadowRoot.querySelector("#speed2").addEventListener("click", (event) => {
+            this.speed2();
+        });
+
+        this.shadowRoot.querySelector("#slow2").addEventListener("click", (event) => {
+            this.slow2();
         });
 
         this.shadowRoot.querySelector("#knob-1").addEventListener("input", (event) => {
@@ -338,6 +389,10 @@ class MyAudioPlayer extends HTMLElement {
             this.changeGain(event.target.value, 5);
         });
 
+        this.shadowRoot.querySelector("#gainSlider1").addEventListener("input", (event) => {
+            this.setGain(event.target.value);
+        });
+
         this.player.addEventListener('timeupdate', (event) => {
             let p = this.shadowRoot.querySelector("#progressRuler");
 
@@ -348,9 +403,46 @@ class MyAudioPlayer extends HTMLElement {
 
             }
         })
+
+    }
+    //API
+
+    mute(val) {
+        if (this.player.muted == true) {
+            this.player.muted = false;
+        } else {
+            this.player.muted = true;
+        }
     }
 
-    //API
+    back(val) {
+        this.player.currentTime = this.player.currentTime - 10;
+    }
+
+    forward(val) {
+        this.player.currentTime = this.player.currentTime + 10;
+    }
+
+    speed2(val) {
+        if(this.player.playbackRate ==1 ) {
+            this.player.playbackRate = 2;
+        } else {
+            this.player.playbackRate = 1;
+        }  
+    }
+
+    slow2(val) {
+        if(this.player.playbackRate ==1 ) {
+            this.player.playbackRate = 0.5;
+        } else {
+            this.player.playbackRate = 1;
+        }  
+    }
+
+    setGain(val) {
+        this.gainNode1.gain.value = val;
+    }
+
     setVolume(val) {
         this.player.volume = val;
     }
