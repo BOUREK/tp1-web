@@ -50,6 +50,17 @@ template.innerHTML = `
         width: 50px;
     }
 
+    .eq {
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    div .bloc {
+        display:inline-block;
+        vertical-align:middle;
+    }
+
     progress {
         width:80%;
         height:15px;
@@ -62,9 +73,7 @@ template.innerHTML = `
   </style>
   <div style="background-color:grey; text-align:center; margin-left:20%; margin-right:20%">
   <div style="background-color:black; text-align:center; margin: 25px 25px 25px 25px">
-  <div>
-  <h1>Audio Player</h1>
-  </div>
+
   <audio id="myPlayer" crossorigin>
         <source src="./myComponents/assets/mp3/titre1.mp3" type="audio/mp3" />
         <source src="http://mainline.i3s.unice.fr/mooc/guitarRiff1.ogg" type="audio/mp3" />
@@ -79,17 +88,16 @@ template.innerHTML = `
   <br>
 
   <div style="width: 100%">
-  <webaudio-switch class= "buttonPlay" id="playButton" width="60" height="60" src="./assets/imgs/play.png" type="toggle" value="false"></webaudio-switch>
-  <webaudio-switch class= "buttonPause" id="pauseButton" width="60" height="60" src="./assets/imgs/pause.png" type="toggle" value="false"></webaudio-switch>
-  <webaudio-switch class= "buttonReset" id="toZeroButton" width="60" height="60" src="./assets/imgs/reset.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "playPause" id="playPause" width="80" height="80" src="./assets/imgs/pp.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "buttonReset" id="toZeroButton" width="80" height="80" src="./assets/imgs/reset.png" type="toggle" value="false"></webaudio-switch>
 
-  <webaudio-switch class= "buttonBack" id="backButton" width="60" height="60" src="./assets/imgs/back.png" type="toggle" value="false"></webaudio-switch>
-  <webaudio-switch class= "buttonForward" id="forwardButton" width="60" height="60" src="./assets/imgs/forward.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "buttonBack" id="backButton" width="80" height="80" src="./assets/imgs/back.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "buttonForward" id="forwardButton" width="80" height="80" src="./assets/imgs/forward.png" type="toggle" value="false"></webaudio-switch>
   
-  <webaudio-switch class= "buttonSpeed" id="speed2" width="60" height="60" src="./assets/imgs/speed2.png" type="toggle" value="false"></webaudio-switch>
-  <webaudio-switch class= "buttonSlow" id="slow2" width="60" height="60" src="./assets/imgs/slow2.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "buttonSpeed" id="speed2" width="80" height="80" src="./assets/imgs/speed2.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "buttonSlow" id="slow2" width="80" height="80" src="./assets/imgs/slow2.png" type="toggle" value="false"></webaudio-switch>
 
-  <webaudio-switch class= "buttonMute" id="muteButton" width="60" height="60" src="./assets/imgs/mute.png" type="toggle" value="false"></webaudio-switch>
+  <webaudio-switch class= "buttonMute" id="muteButton" width="80" height="80" src="./assets/imgs/mute.png" type="toggle" value="false"></webaudio-switch>
   </div>
 
   <br>
@@ -100,47 +108,53 @@ template.innerHTML = `
   <webaudio-knob class="stereo" id="knobStereo" tooltip="Balance:%s" src="./assets/imgs/stere.png" sprites="99" value=0 min="-1" max="1" step=0.05 width="100" height="100"></webaudio-knob>
   </div>
 
-  <br>
-
   <div id="meter">
     <webaudio-knob id="meterKnob" src="./assets/imgs/meter.png" sprites="100" value="100" min="124" max="134" step="0.1" enable="0" width=170 height=150></webaudio-knob>
   </div>
   
   <br>
-  <br>
+  <div class="equalizer">
   <div class="eq">
-  <div class="controls">
-    <label>60Hz</label>
-    <webaudio-knob id="i0" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
+  <div class="bloc" >   
+  <webaudio-knob id="i0" tooltip="Equalizer:%s" src="./assets/imgs/hz60.png" sprites="60" value="0" step="1" min="-30" max="30" width=50 height=180></webaudio-knob>
+  <br>
   <output id="gain0">0 dB</output>
   </div>
-  <div class="controls">
-    <label>170Hz</label>
-    <webaudio-knob id="i1" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
-<output id="gain1">0 dB</output>
-  </div>
-  <div class="controls">
-    <label>350Hz</label>
-    <webaudio-knob id="i2" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
-<output id="gain2">0 dB</output>
-  </div>
-  <div class="controls">
-    <label>1000Hz</label>
-    <webaudio-knob id="i3" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
-<output id="gain3">0 dB</output>
-  </div>
-  <div class="controls">
-    <label>3500Hz</label>
-    <webaudio-knob id="i4" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
-<output id="gain4">0 dB</output>
-  </div>
-  <div class="controls">
-    <label>10000Hz</label>
-    <webaudio-knob id="i5" tooltip="Equalizer:%s" src="./assets/imgs/equalizer.png" sprites="60" value="0" step="1" min="-30" max="30" width=200 height=30></webaudio-knob>
-<output id="gain5">0 dB</output>
+
+  <div class="bloc" >   
+  <webaudio-knob id="i1" tooltip="Equalizer:%s" src="./assets/imgs/hz170.png" sprites="60" value="0" step="1" min="-30" max="30" width=50 height=180></webaudio-knob>
+  <br>
+  <output id="gain1">0 dB</output>
   </div>
 
-</div>
+  <div class="bloc" >   
+  <webaudio-knob id="i2" tooltip="Equalizer:%s" src="./assets/imgs/hz350.png" sprites="60" value="0" step="1" min="-30" max="30" width=50 height=180></webaudio-knob>
+  <br>
+  <output id="gain2">0 dB</output>
+  </div>
+
+  <div class="bloc" >   
+  <webaudio-knob id="i3" tooltip="Equalizer:%s" src="./assets/imgs/hz1000.png" sprites="60" value="0" step="1" min="-30" max="30" width=50 height=180></webaudio-knob>
+  <br>
+  <output id="gain3">0 dB</output>
+  </div>
+  
+  <div class="bloc" >   
+  <webaudio-knob id="i4" tooltip="Equalizer:%s" src="./assets/imgs/hz3500.png" sprites="60" value="0" step="1" min="-30" max="30" width=50 height=180></webaudio-knob>
+  <br>
+  <output id="gain4">0 dB</output>
+  </div>
+  
+  <div class="bloc" >   
+  <webaudio-knob id="i5" tooltip="Equalizer:%s" src="./assets/imgs/hz10000.png" sprites="60" value="0" step="1" min="-30" max="30" width=50 height=180></webaudio-knob>
+  <br>
+  <output id="gain5">0 dB</output>
+  </div>
+
+  </div>
+  
+  </div>
+  <br>
 </div>
 </div>
   `;
@@ -325,12 +339,9 @@ class MyAudioPlayer extends HTMLElement {
     }
 
     declareListeners() {
-        this.shadowRoot.querySelector("#playButton").addEventListener("click", (event) => {
-            this.play();
-        });
 
-        this.shadowRoot.querySelector("#pauseButton").addEventListener("click", (event) => {
-            this.pause();
+        this.shadowRoot.querySelector("#playPause").addEventListener("click", (event) => {
+            this.playPause();
         });
 
         this.shadowRoot.querySelector("#toZeroButton").addEventListener("click", (event) => {
@@ -453,6 +464,14 @@ class MyAudioPlayer extends HTMLElement {
 
     play() {
         this.player.play();
+    }
+
+    playPause() {
+        if( this.player.paused ) {
+            this.player.play();
+        } else {
+            this.player.pause();
+        }
     }
 
     pause() {
