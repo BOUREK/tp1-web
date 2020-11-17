@@ -61,15 +61,37 @@ template.innerHTML = `
         vertical-align:middle;
     }
 
-    progress {
-        width:80%;
+    div .line {
+        display:inline-block;
+    }
+
+    .progress {
+        width:70%;
         height:15px;
-        background-color:grey;
     }
 
     #myCanvas {
         border:1px solid;
+        width: 90%;
+        height: 200px;
       }
+
+    #timeView {
+        color: red;
+        margin-left: 10%;
+        font-size: 25px;
+        max-width: 100px;
+    }
+
+    .line {
+        color: red;
+    }
+
+    #unit {
+        color: orange;
+      }
+
+    
   </style>
   <div style="background-color:grey; text-align:center; margin-left:20%; margin-right:20%">
   <div style="background-color:black; text-align:center; margin: 25px 25px 25px 25px">
@@ -79,14 +101,17 @@ template.innerHTML = `
         <source src="http://mainline.i3s.unice.fr/mooc/guitarRiff1.ogg" type="audio/mp3" />
   </audio>
 
-  <canvas id="myCanvas" width=300 height=100></canvas>
+  <canvas id="myCanvas"></canvas>
 
   <br>
   <div>
-  <progress id="progressRuler" min=0 value=0 step=0.1></progress>
+  <div class="line">
+  <webaudio-slider class="progress" height="20" width="500" id="progressRuler" min="0" step="0.01" value="0" src="./assets/imgs/slider.png" ></webaudio-slider>
   </div>
-  <br>
-
+  <div class="line" id="timeView">sec</div>
+  <div id="unit" class="line">sec</div>
+  </div>
+  
   <div style="width: 100%">
   <webaudio-switch class= "playPause" id="playPause" width="80" height="80" src="./assets/imgs/pp.png" type="toggle" value="false"></webaudio-switch>
   <webaudio-switch class= "buttonReset" id="toZeroButton" width="80" height="80" src="./assets/imgs/reset.png" type="toggle" value="false"></webaudio-switch>
@@ -163,6 +188,7 @@ class MyAudioPlayer extends HTMLElement {
     constructor() {
         super();
         this.volume = 1;
+        this.duration = 0;
         this.attachShadow({ mode: "open" });
 
         this.shadowRoot.appendChild(template.content.cloneNode(true));
@@ -260,7 +286,7 @@ class MyAudioPlayer extends HTMLElement {
         gradient.addColorStop("0.3", "red");
         gradient.addColorStop("0.7", "yellow");
         gradient.addColorStop("1.0", "blue");
-        
+
 
         // 2 - Get the analyser data - for waveforms we need time domain data
         this.analyserNode.getByteTimeDomainData(this.dataArray);
@@ -406,6 +432,7 @@ class MyAudioPlayer extends HTMLElement {
 
         this.player.addEventListener('timeupdate', (event) => {
             let p = this.shadowRoot.querySelector("#progressRuler");
+            let t = this.shadowRoot.querySelector("#timeView");
 
             try {
                 p.max = this.player.duration.toFixed(2);
@@ -413,12 +440,23 @@ class MyAudioPlayer extends HTMLElement {
             } catch (err) {
 
             }
+
+            try {
+                t.innerHTML = `${Math.floor(this.player.currentTime) + ' / ' + Math.floor(this.player.duration)}`;
+            } catch (err) {
+
+            }
+        });
+
+        this.shadowRoot.querySelector("#progressRuler").addEventListener("change", (event) => {
+            this.setCurrentTime(event.target.value);
+            this.shadowRoot.querySelector("#timeView").innerHTML = `${Math.floor(this.player.currentTime) + ' / ' + Math.floor(this.player.duration)}`;
         })
 
     }
     //API
 
-    mute(val) {
+    mute() {
         if (this.player.muted == true) {
             this.player.muted = false;
         } else {
@@ -426,28 +464,32 @@ class MyAudioPlayer extends HTMLElement {
         }
     }
 
-    back(val) {
+    back() {
         this.player.currentTime = this.player.currentTime - 10;
     }
 
-    forward(val) {
+    setCurrentTime(val) {
+        this.player.currentTime = val;
+    }
+
+    forward() {
         this.player.currentTime = this.player.currentTime + 10;
     }
 
-    speed2(val) {
-        if(this.player.playbackRate ==1 ) {
+    speed2() {
+        if (this.player.playbackRate == 1) {
             this.player.playbackRate = 2;
         } else {
             this.player.playbackRate = 1;
-        }  
+        }
     }
 
-    slow2(val) {
-        if(this.player.playbackRate ==1 ) {
+    slow2() {
+        if (this.player.playbackRate == 1) {
             this.player.playbackRate = 0.5;
         } else {
             this.player.playbackRate = 1;
-        }  
+        }
     }
 
     setGain(val) {
@@ -467,7 +509,7 @@ class MyAudioPlayer extends HTMLElement {
     }
 
     playPause() {
-        if( this.player.paused ) {
+        if (this.player.paused) {
             this.player.play();
         } else {
             this.player.pause();
