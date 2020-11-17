@@ -1,3 +1,3 @@
 # tp1-web
 
-demo at : https://bourek.github.io/tp1-web/
+Audio player demo on : https://bourek.github.io/tp1-web-audioPlayer/
